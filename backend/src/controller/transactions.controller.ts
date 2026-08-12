@@ -34,3 +34,20 @@ export const getTransactions = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Failed to fetch transactions" });
   }
 };
+
+export const getTransactionById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const transaction = await transactionService.getTransaction(id as string);
+    if (!transaction) {
+      // ← handle not found
+      return res.status(404).json({ error: "Transaction not found" });
+    }
+
+    res.status(200).json(transaction);
+  } catch (err) {
+    console.error(err);
+    res.status(404).json({ error: "Failed to fetch transaction" });
+  }
+};

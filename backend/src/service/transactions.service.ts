@@ -25,6 +25,12 @@ export const getAll = async () => {
   const result = await pool.query(
     `SELECT * FROM transactions ORDER BY date DESC`,
   );
-  console.log(result);
   return result.rows;
+};
+
+export const getTransaction = async (id: string) => {
+  const result = await pool.query(`SELECT * FROM transactions WHERE id = $1`, [
+    id,
+  ]);
+  return result.rows[0];
 };
